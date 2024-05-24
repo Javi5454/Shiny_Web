@@ -72,7 +72,7 @@ function(input, output, session) {
     # Aplicamos los filtros
     s <- filter(spotify,
                 popularity >= popularityF,
-                duration_ms >= durationF,
+                duration_ms <= durationF,
                 explicit == explicitF) %>%
       arrange(popularity)
     
@@ -126,17 +126,18 @@ function(input, output, session) {
     xvar_name <- names(axis_vars_X)[axis_vars_X == input$xvar]
     yvar_name <- names(axis_vars_Y)[axis_vars_Y == input$yvar]
     
-     # songs() %>%
-     #   ggvis(~input$xvar, ~input$yvar) %>%
-     #   layer_points(size := 50, size.hover := 300,
-     #                fillOpacity := 0.4, fillOpacity.hover := 0.9,
-     #                key := ~ID) %>%
-     #   add_tooltip(song_tooltip, "hover") %>%
-     #   add_axis("x", title= xvar_name) %>%
-     #   add_axis("y", title= yvar_name) %>%
-     #   set_options(width=800, height=500)
+    xvar <- prop("x", as.symbol(input$xvar))
+    yvar <- prop("y", as.symbol(input$yvar))
     
-    songs() %>% ggvis(~popularity, ~duration_ms) %>% layer_points()
+      songs() %>%
+        ggvis(x = xvar, y = yvar) %>%
+        layer_points(size := 50, size.hover := 300,
+                     fillOpacity := 0.4, fillOpacity.hover := 0.9,
+                     key := ~ID) %>%
+        add_tooltip(song_tooltip, "hover") %>%
+        add_axis("x", title= xvar_name) %>%
+        add_axis("y", title= yvar_name) %>%
+        set_options(width=800, height=500)
   })
   
   vis %>% bind_shiny("spotify_plot")
