@@ -1,17 +1,9 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
-
+# Carga de librerías
 library(shiny)
 library(ggvis)
 library(dplyr)
 library(ggplot2)
-
+library(magick)
 
 #---------------------------------------------
 # SPOTIFY
@@ -46,11 +38,22 @@ axis_vars_Y <- c(
   "Volúmen (dB)" = "loudness"
 )
 
-#---------------------------------------------
+# Función para aplicar filtros convolucionales
+apply_filter <- function(image, filter) {
+  switch(filter,
+         "Desenfoque" = image %>% image_blur(radius = 10, sigma = 5),
+         "Detección de bordes" = image %>% image_edge(radius = 2),
+         "Sharpen" = image %>% image_convolve(kernel = "3x3: 0, -1, 0, -1, 5, -1, 0, -1, 0"),
+         "Emboss" = image %>% image_convolve(kernel = "3x3: -2, -1, 0, -1, 1, 1, 0, 1, 2"),
+         "Canny" = image %>% image_convert(colorspace = "gray") %>% 
+           image_morphology(method = "Convolve", kernel = "DoG:0,1,0.5"),
+         "Original" = image
+  )
+}
 
 # Define server logic required to draw a histogram
 function(input, output, session) {
-
+  
   #---------------------------------------------
   # SPOTIFY
   
@@ -105,7 +108,7 @@ function(input, output, session) {
     #Convertimos a data frame
     s <- as.data.frame(s)
     s
-  
+    
   })
   
   # Funcion para mostrar el texto de la cancion
@@ -131,15 +134,15 @@ function(input, output, session) {
     xvar <- prop("x", as.symbol(input$xvar))
     yvar <- prop("y", as.symbol(input$yvar))
     
-      songs() %>%
-        ggvis(x = xvar, y = yvar) %>%
-        layer_points(size := 50, size.hover := 300,
-                     fillOpacity := 0.4, fillOpacity.hover := 0.9,
-                     key := ~ID) %>%
-        add_tooltip(song_tooltip, "hover") %>%
-        add_axis("x", title= xvar_name) %>%
-        add_axis("y", title= yvar_name) %>%
-        set_options(width=800, height=500)
+    songs() %>%
+      ggvis(x = xvar, y = yvar) %>%
+      layer_points(size := 50, size.hover := 300,
+                   fillOpacity := 0.4, fillOpacity.hover := 0.9,
+                   key := ~ID) %>%
+      add_tooltip(song_tooltip, "hover") %>%
+      add_axis("x", title= xvar_name) %>%
+      add_axis("y", title= yvar_name) %>%
+      set_options(width=800, height=500)
   })
   
   vis %>% bind_shiny("spotify_plot")
@@ -225,15 +228,37 @@ function(input, output, session) {
       plot
     })
   })
-
-  
-  
-  
   
   #---------------------------------------------
-
+  # Funcionalidad de Valentin
+  
+  image_reactive <- reactiveVal(NULL)
+  original_image <- reactiveVal(NULL)
+  
+  observeEvent(input$image, {
+    req(input$image)
+    image <- image_read(input$image$datapath)
+    image_reactive(image)
+    original_image(image)
+  })
+  
+  observeEvent(input$apply, {
+    req(image_reactive())
+    filtered_image <- apply_filter(image_reactive(), input$filter)
+    image_reactive(filtered_image)
+  })
+  
+  observeEvent(input$reset, {
+    req(original_image())
+    image_reactive(original_image())
+  })
+  
+  output$image_ui <- renderUI({
+    req(image_reactive())
+    output$image_output <- renderImage({
+      tmpfile <- image_write(image_reactive(), tempfile(fileext = 'jpg'), format = 'jpg')
+      list(src = tmpfile, contentType = 'image/jpeg', width = '80%', height = 'auto')
+    }, deleteFile = TRUE)
+    imageOutput("image_output", width = "80%", height = "auto")
+  })
 }
-
-
-
-

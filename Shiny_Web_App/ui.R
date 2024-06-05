@@ -1,12 +1,4 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
-
+# Carga de librerías
 library(shiny)
 library(ggvis)
 
@@ -165,7 +157,7 @@ shinyApp(ui = ui, server = server)'
                )
       ),
       # ------------------------------------------------------------------------------------
-      # MOTECARLO
+      # MONTECARLO
       # ------------------------------------------------------------------------------------
       tabPanel("Montecarlo", 
                h2("Método Montecarlo"),
@@ -197,19 +189,127 @@ shinyApp(ui = ui, server = server)'
                actionButton("run_diffusion", "Ejecutar Simulación"),
                sliderInput("time_step", "Seleccionar instante t:", min = 1, max = 100, value = 1, step = 1, animate = TRUE),
                checkboxInput("show_trajectory", "Mostrar Trayectorias", value = TRUE),
-               plotOutput("diffusion_plot")
+               plotOutput("diffusion_plot", height = "400px", width = "600px")
       ),
       
       # ------------------------------------------------------------------------------------
       # ------------------------------------------------------------------------------------
-
+      
       tabPanel("Pablo", "Contenido de Pablo"),
-      tabPanel("Valentin", "Contenido de Valentin"),
+      tabPanel("Convolucion", 
+               sidebarLayout(
+                 sidebarPanel(
+                   fileInput("image", "Sube tu imagen", accept = c('image/png', 'image/jpeg')),
+                   selectInput("filter", "Selecciona un filtro", 
+                               choices = c("Original", "Desenfoque", "Detección de bordes", "Sharpen", "Emboss", "Canny")),
+                   actionButton("apply", "Aplicar Filtro"),
+                   actionButton("reset", "Reiniciar"),
+                   br(),
+                   h4("Explicación de Filtros Convolucionales"),
+                   p("Los filtros convolucionales son matrices que se aplican a una imagen para extraer características específicas. Algunos ejemplos comunes son:"),
+                   tags$ul(
+                     tags$li(tags$b("Desenfoque:"), " Aplica un desenfoque a la imagen."),
+                     tags$li(tags$b("Detección de bordes:"), " Realza los bordes de la imagen."),
+                     tags$li(tags$b("Sharpen:"), " Realza los detalles en la imagen."),
+                     tags$li(tags$b("Emboss:"), " Crea un efecto de relieve en la imagen."),
+                     tags$li(tags$b("Canny:"), " Utiliza un algoritmo para la detección de bordes.")
+                   ),
+                   h4("Historia de la Visión por Computadora"),
+                   p("La visión por computadora es un campo de la inteligencia artificial que se enfoca en replicar aspectos del sistema visual humano. Se originó en la década de 1960, cuando se comenzaron a desarrollar algoritmos para la interpretación de imágenes. Con el tiempo, y gracias a los avances en la tecnología de los computadores y el surgimiento de nuevas técnicas de aprendizaje automático, la visión por computadora ha evolucionado significativamente."),
+                   p("En la década de 1980, surgieron métodos para la segmentación de imágenes y la detección de bordes, lo cual permitió el desarrollo de aplicaciones más complejas. En la década de 1990, la llegada de técnicas de aprendizaje profundo revolucionó el campo, permitiendo el desarrollo de redes neuronales convolucionales (CNNs) que pueden aprender características directamente de los datos de imagen, mejorando drásticamente el rendimiento en tareas de reconocimiento y clasificación de imágenes.")
+                 ),
+                 mainPanel(
+                   uiOutput("image_ui")
+                 )
+               )
+      ),
       navbarMenu("About Us",
-                 tabPanel("Misión", "Información sobre nuestra misión"),
-                 tabPanel("Visión", "Información sobre nuestra visión"),
-                 tabPanel("Equipo", "Información sobre nuestro equipo")
+                 tabPanel("Misión", 
+                          div(
+                            h2("Objetivo"),
+                            p("Somos alumnos del doble grado de Informática y Matemáticas que en este proyecto hemos desarrollado la práctica final de Estadística Computacional. Esta consistía en profundizar en un tema en R studio no visto en la asignatura y adquirir los conocimientos necesarios para poder mostrar su utilidad."),
+                            p("Buscando entre los posibles tema sobre los que hacer el proyecto, surgió la idea del paquete Shiny. Este paquete si bien no se centra concretamente en analizar datos, realizar estudios estadístico o funciones similares, se centra en la creación de simples páginas web para la visualización de estos estudios, mediante R studio."),
+                            p("Vimos por tanto en este paquete, una manera de salirnos de lo convencional y hacer algo más ilustrativo e interesante. Además, el inmenso número de facilidades que presenta Shiny y su larga cantidad de aplicaciones nos dieron la posibilidad de ser creativos y desarollar casi cualquier cosa que pudiésemos pensar.")
+                          )
+                 ),
+                 tabPanel("Visión", 
+                          div(
+                            h2("Nuestra Visión"),
+                            p("Aspiramos a aplicar los conocimientos adquiridos en nuestras carreras para desarrollar aplicaciones que integren la informática y la matemática."),
+                            p("Nuestro enfoque en Shiny nos permitirá crear herramientas interactivas y accesibles para la visualización y análisis de datos, contribuyendo a una mejor comprensión sobre el tema.")
+                          )
+                 ),
+                 tabPanel("Equipo", 
+                          div(
+                            h2("Nuestro Equipo"),
+                            p("Nuestro equipo está compuesto por estudiantes dedicados del doble grado de Informática y Matemáticas. Cada uno de nosotros aporta una combinación única de habilidades técnicas y analíticas que nos permiten abordar problemas complejos desde múltiples perspectivas."),
+                            p("Estamos comprometidos con el aprendizaje continuo y la aplicación práctica de nuestros conocimientos para resolver desafíos del mundo real. Reflejar nuestros conocimientos mediante visualizaciones interactivas de distintas tareas nos anima a desarollar aplicaciones semejantes a las vistas en este proyecto.")
+                          ),
+                          div(
+                            div(
+                              h3("Integrante 1: Valentín"),
+                              img(src = "valentin.jpg", height = "150px"),
+                              p("Suelo ir en patín a clase y me gusta jugar al fútbol. Mi película favorita es Cadena Perpetua."),
+                              p("Lugar de procedencia: El Puerto de Santa María"),
+                              p(
+                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                       img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
+                                ),
+                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
+                                       img(src = "instagram.png", title = "Instagram", height = "30px")
+                                )
+                              )
+                            ),
+                            hr(),
+                            div(
+                              h3("Integrante 2: [Nombre]"),
+                              img(src = "ruta_a_la_foto_2.jpg", height = "150px"),
+                              p("Descripción breve sobre el integrante 2."),
+                              p("Lugar de procedencia: [Lugar de procedencia]"),
+                              p(
+                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                       img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
+                                ),
+                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
+                                       img(src = "instagram.png", title = "Instagram", height = "30px")
+                                )
+                              )
+                            ),
+                            hr(),
+                            div(
+                              h3("Integrante 3: [Nombre]"),
+                              img(src = "ruta_a_la_foto_3.jpg", height = "150px"),
+                              p("Descripción breve sobre el integrante 3."),
+                              p("Lugar de procedencia: [Lugar de procedencia]"),
+                              p(
+                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                       img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
+                                ),
+                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
+                                       img(src = "instagram.png", title = "Instagram", height = "30px")
+                                )
+                              )
+                            ),
+                            hr(),
+                            div(
+                              h3("Integrante 4: [Nombre]"),
+                              img(src = "ruta_a_la_foto_4.jpg", height = "150px"),
+                              p("Descripción breve sobre el integrante 4."),
+                              p("Lugar de procedencia: [Lugar de procedencia]"),
+                              p(
+                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                       img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
+                                ),
+                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
+                                       img(src = "instagram.png", title = "Instagram", height = "30px")
+                                )
+                              )
+                            )
+                        )
+                 )
       )
+      
       )
   )
 )
+
