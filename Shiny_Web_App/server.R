@@ -10,6 +10,8 @@
 library(shiny)
 library(ggvis)
 library(dplyr)
+library(ggplot2)
+
 
 #---------------------------------------------
 # SPOTIFY
@@ -145,5 +147,93 @@ function(input, output, session) {
   output$n_songs <- renderText({ nrow(songs())})
   
   #---------------------------------------------
+  #---------------------------------------------
+  # MONTECARLO
+  
+  
+  # Variable para almacenar las simulaciones
+  diffusion_data <- reactiveValues(data = NULL)
+  
+  # Se ejecuta cuando pulsamos Ejecutar Simulación
+  observeEvent(input$run_diffusion, {
+    num_particles <- input$num_particles
+    num_steps <- input$num_steps_diffusion
+    
+    # Simulación de la difusión en 2D
+    diffusion_sim <- replicate(num_particles, {
+      x <- cumsum(sample(c(-1, 1), num_steps, replace = TRUE)) # Movimiento horizontal +-1
+      y <- cumsum(sample(c(-1, 1), num_steps, replace = TRUE)) # Movimiento vertical +-1
+      data.frame(step = 1:num_steps, x = x, y = y) # Creamos el dataframe con cada instante y la posicion
+    }, simplify = FALSE)
+    
+    diffusion_df <- do.call(rbind, lapply(seq_along(diffusion_sim), function(i) {
+      cbind(diffusion_sim[[i]], particle = i)
+    }))
+    
+    diffusion_data$data <- diffusion_df # Añadimos los datos al objeto diffusion_data
+    
+    updateSliderInput(session, "time_step", max = num_steps, value = 1) # Esto nos permitira seleccionar el instante deseado
+  })
+  
+  # 
+  output$diffusion_plot <- renderPlot({
+    req(diffusion_data$data)
+    step_data <- diffusion_data$data %>% filter(step == input$time_step) # Se obtienen los datos del instante t seleccionado en time_step
+    
+    # Creamos el gráfico
+    plot <- ggplot(step_data, aes(x = x, y = y, color = as.factor(particle))) +
+      geom_point(size = 5, show.legend = FALSE) + # Hacemos puntos más grandes
+      labs(title = paste("Difusión de Montecarlo - Instante t =", input$time_step), x = "Posición X", y = "Posición Y") +
+      theme_minimal() +
+      xlim(min(diffusion_data$data$x), max(diffusion_data$data$x)) + # Fijamos los límites del eje x 
+      ylim(min(diffusion_data$data$y), max(diffusion_data$data$y))   # Fijamos los límites del eje y 
+    
+    # Si queremos ver las trayectorias las añadimos al grafico
+    if (input$show_trajectory) {
+      all_steps_data <- diffusion_data$data %>% filter(step <= input$time_step) # Tomamos las posiciones anteriores al instante t
+      plot <- plot + geom_path(data = all_steps_data, aes(x = x, y = y, group = particle), alpha = 0.5, size = 1.2, show.legend = FALSE) # Dibujamos los caminos entre las posiciones de cada particula 
+    }
+    
+    plot
+  })
+  
+  #Actualizamos la barra deslizante si se modifican los datos (se realiza una nueva simulacion)
+  observeEvent(diffusion_data$data, {
+    updateSliderInput(session, "time_step", max = max(diffusion_data$data$step))
+  })
+  
+  # Actualizacion del gráfico si se modifica el valor de time_step (cambiamos de instante)
+  observeEvent(input$time_step, {
+    output$diffusion_plot <- renderPlot({
+      req(diffusion_data$data)
+      step_data <- diffusion_data$data %>% filter(step == input$time_step) # Se obtienen los datos del instante t seleccionado en time_step
+      
+      # Creamos el gráfico
+      plot <- ggplot(step_data, aes(x = x, y = y, color = as.factor(particle))) +
+        geom_point(size = 5, show.legend = FALSE) + # Hacemos puntos más grandes
+        labs(title = paste("Difusión de Montecarlo - Instante t =", input$time_step), x = "Posición X", y = "Posición Y") +
+        theme_minimal() +
+        xlim(min(diffusion_data$data$x), max(diffusion_data$data$x)) + # Fijamos los límites del eje x 
+        ylim(min(diffusion_data$data$y), max(diffusion_data$data$y))   # Fijamos los límites del eje y 
+      
+      # Si queremos ver las trayectorias las añadimos al grafico
+      if (input$show_trajectory) {
+        all_steps_data <- diffusion_data$data %>% filter(step <= input$time_step) # Tomamos las posiciones anteriores al instante t
+        plot <- plot + geom_path(data = all_steps_data, aes(x = x, y = y, group = particle), alpha = 0.5, size = 1.2, show.legend = FALSE) # Dibujamos los caminos entre las posiciones de cada particula 
+      }
+      
+      plot
+    })
+  })
+
+  
+  
+  
+  
+  #---------------------------------------------
 
 }
+
+
+
+

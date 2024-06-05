@@ -164,8 +164,45 @@ shinyApp(ui = ui, server = server)'
                  )
                )
       ),
-      tabPanel("Angel", "Contenido de Angel"),
-      tabPanel("Javier", "Contenido de Javier"),
+      # ------------------------------------------------------------------------------------
+      # MOTECARLO
+      # ------------------------------------------------------------------------------------
+      tabPanel("Montecarlo", 
+               h2("Método Montecarlo"),
+               tags$div(
+                 style = "display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 20px;",
+                 tags$h3("Orígenes del Método"),
+                 tags$p(HTML("El método de Montecarlo fue inventado por <strong>Stanislaw Ulam</strong> y <strong>John von Neumann</strong> en la década de 1940, poco después de la Segunda Guerra Mundial. Ulam tuvo la idea en 1946 mientras jugaba al solitario durante una enfermedad. Se dio cuenta de que era más fácil estimar el resultado del juego realizando múltiples pruebas aleatorias en lugar de calcular todas las combinaciones posibles. Pensó que este enfoque podía aplicarse a la <strong>difusión de neutrones</strong> en su trabajo en <strong>Los Álamos</strong>, donde las ecuaciones complejas hacían casi imposible una solución exacta.")),
+                 tags$div(
+                   style = "display: flex; align-items: flex-start; width: 100%;",
+                   tags$div(
+                     style = "margin-right: 20px; width: 150px; max-width: 150px; text-align: center;",
+                     tags$img(src = "img/montecarlo01.jpg", alt = "Jon Von Neumann y Robert Oppenheimer en los Álamos", style = "width: 100%;"),
+                     tags$div(style = "font-size: 0.9em; color: #555; text-align: center; margin-top: 5px; width: 100%; box-sizing: border-box;", "Jon Von Neumann y Robert Oppenheimer en los Álamos")
+                   ),
+                   tags$div(
+                     style = "flex: 1;",
+                     tags$p(HTML("Con la disponibilidad de <strong>máquinas de computación</strong>, estas podían utilizarse para realizar simulaciones numéricas y reemplazar los experimentos físicos. Durante una visita de von Neumann a Los Álamos en 1946, Ulam le mencionó el método. Aunque inicialmente escéptico, von Neumann se entusiasmó y comenzó a desarrollar el método de forma sistemática. Montecarlo empezó a tomar forma y a desarrollarse después de esta conversación."), style = "margin-bottom: 20px;"),
+                     tags$p(HTML("A principios de 1947, von Neumann envió una carta a Richtmyer en Los Álamos explicando el método y sugiriendo su aplicación para rastrear la generación de neutrones en una esfera. Estimaba que el cálculo de 100 neutrones a través de 100 colisiones llevaría 5 horas con el <strong>ENIAC</strong>."), style = "margin-bottom: 20px;"),
+                     tags$p(HTML("Una de las primeras aplicaciones del método a un problema determinista fue en 1948, cuando <strong>Enrico Fermi</strong>, Ulam y von Neumann lo utilizaron para calcular los <strong>valores singulares de la ecuación de Schrödinger</strong>. Ulam también estaba interesado en usar Montecarlo para evaluar integrales múltiples."), style = "margin-bottom: 20px;")
+                   )
+                 )
+               ),
+               h3("Simulación de Difusión Montecarlo"),
+               tags$p(HTML("La simulación de difusión de Montecarlo es una técnica que utiliza métodos estocásticos para modelar y analizar sistemas que evolucionan en el tiempo. En esta simulación, se representan partículas que se mueven aleatoriamente en un espacio, siguiendo una caminata aleatoria o proceso de difusión. 
+                 <br><br>
+                 Cada partícula realiza una serie de pasos diagonales aleatorios en un plano, y se puede observar cómo se dispersan con el tiempo. Por simplicidad no hemos tenido en cuenta colisiones. Esta técnica es útil para estudiar fenómenos físicos como la difusión de gases, el movimiento browniano y otros procesos que involucran movimiento aleatorio.")),
+               numericInput("num_particles", "Número de partículas:", value = 10, min = 1, max = 100),
+               numericInput("num_steps_diffusion", "Número de pasos:", value = 100, min = 1, max = 100),
+               actionButton("run_diffusion", "Ejecutar Simulación"),
+               sliderInput("time_step", "Seleccionar instante t:", min = 1, max = 100, value = 1, step = 1, animate = TRUE),
+               checkboxInput("show_trajectory", "Mostrar Trayectorias", value = TRUE),
+               plotOutput("diffusion_plot")
+      ),
+      
+      # ------------------------------------------------------------------------------------
+      # ------------------------------------------------------------------------------------
+
       tabPanel("Pablo", "Contenido de Pablo"),
       tabPanel("Valentin", "Contenido de Valentin"),
       navbarMenu("About Us",
