@@ -200,11 +200,11 @@ shinyApp(ui = ui, server = server)'
                fluidRow(
                  column(12,
                         h2("Plegamiento de Proteínas"),
-                        p("El plegamiento de proteínas es un proceso crucial en la biología molecular donde una cadena de aminoácidos se pliega en una estructura tridimensional específica y funcional. Este proceso es fundamental porque la función biológica de una proteína está directamente relacionada con su estructura tridimensional."),
-                        p("El plegamiento correcto de las proteínas es esencial para la salud celular y el buen funcionamiento del organismo. Sin embargo, cuando las proteínas no se pliegan correctamente, pueden formarse agregados tóxicos que están implicados en una variedad de enfermedades neurodegenerativas, como el Alzheimer, el Parkinson y la enfermedad de Huntington, así como en otras condiciones patológicas."),
-                        p("Comprender cómo las proteínas se pliegan correctamente y qué factores pueden influir en este proceso es uno de los grandes desafíos de la biología molecular. La predicción precisa de las estructuras proteicas ha sido históricamente difícil y ha requerido técnicas experimentales costosas y laboriosas como la cristalografía de rayos X y la resonancia magnética nuclear (RMN)."),
+                        p("El plegamiento de proteínas es un proceso crucial en la biología molecular donde una cadena de aminoácidos adopta una estructura tridimensional específica y funcional. Esta estructura determina su función biológica y su capacidad para interactuar con otras moléculas en el organismo."),
+                        p("Asegurar que las proteínas se plieguen correctamente es vital para mantener la salud celular y el funcionamiento adecuado del cuerpo. Sin embargo, cuando el plegamiento no es correcto, pueden formarse agregados tóxicos que están relacionados con enfermedades neurodegenerativas como el Alzheimer y el Parkinson, así como otras condiciones patológicas."),
+                        p("Entender los mecanismos detrás del plegamiento de las proteínas y los factores que influyen en este proceso es uno de los desafíos más importantes en biología molecular. Históricamente, la predicción precisa de las estructuras proteicas ha sido difícil y requería técnicas experimentales costosas, como la cristalografía de rayos X y la resonancia magnética nuclear (RMN)."),
                         h3("AlphaFold"),
-                        p("AlphaFold, desarrollado por DeepMind, ha revolucionado este campo mediante el uso de inteligencia artificial. AlphaFold utiliza redes neuronales profundas para predecir con alta precisión las estructuras tridimensionales de las proteínas basándose únicamente en sus secuencias de aminoácidos. Este avance ha abierto nuevas posibilidades para la investigación biomédica, facilitando el diseño de nuevos fármacos y el estudio de las bases moleculares de las enfermedades."),
+                        p("AlphaFold, desarrollado por DeepMind, ha revolucionado este campo mediante el uso de inteligencia artificial. Utilizando redes neuronales profundas, AlphaFold puede predecir con alta precisión las estructuras tridimensionales de las proteínas a partir de sus secuencias de aminoácidos. Este avance ha abierto nuevas perspectivas en la investigación biomédica, facilitando el diseño de fármacos y el estudio de las bases moleculares de las enfermedades."),
                         p("A continuación, puedes seleccionar una proteína específica para visualizar su estructura tridimensional y obtener información detallada sobre su funcionalidad y origen.")
                  )
                ),
@@ -223,7 +223,7 @@ shinyApp(ui = ui, server = server)'
                         h3("Gráfico"),
                         class = "box",
                         uiOutput("alphafold_output"),
-                        p("Esta estructura ha sido obtenida por el modelo AlphaFold, un tipo de red neuronal que se ha especializado en predecir este tipo de estructuras mediante técnicas de Inteligencia Artificial, en concreto, con técnicas de Deep Learning."),
+                        p("Esta estructura ha sido obtenida por el modelo AlphaFold, un tipo de red neuronal especializado en predecir este tipo de estructuras mediante técnicas de Inteligencia Artificial, en concreto, con técnicas de Deep Learning."),
                         tags$hr()
                  )
                )
@@ -302,15 +302,15 @@ shinyApp(ui = ui, server = server)'
                             ),
                             hr(),
                             div(
-                              h3("Integrante 2: [Nombre]"),
-                              img(src = "ruta_a_la_foto_2.jpg", height = "150px"),
-                              p("Descripción breve sobre el integrante 2."),
-                              p("Lugar de procedencia: [Lugar de procedencia]"),
+                              h3("Integrante 2: Pablo"),
+                              img(src = "Pablo.jpg", height = "150px"),
+                              p("Soy un apasionado del deporte y la música, dos cosas que no podrían faltar en mi día a día."),
+                              p("Lugar de procedencia: Martos"),
                               p(
-                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                tags$a(href = "https://www.linkedin.com/in/pablo-fuentes-jim%C3%A9nez-62a497311/", target = "_blank",
                                        img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
                                 ),
-                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
+                                tags$a(href = "https://www.instagram.com/pablofj_/", target = "_blank",
                                        img(src = "instagram.png", title = "Instagram", height = "30px")
                                 )
                               )
