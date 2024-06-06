@@ -230,6 +230,47 @@ function(input, output, session) {
   })
   
   #---------------------------------------------
+  # AlphaFold
+    # Crear el renderUI para actualizar AlphaFoldMolstar
+    output$alphafold_output <- renderUI({
+      req(input$proteinId)  # Asegurarse de que hay una ID de proteína seleccionada
+      
+      # Devuelve el widget AlphaFoldMolstar con la ID seleccionada
+      AlphaFoldMolstar(
+        uniProtId = input$proteinId,
+        showAxes = FALSE,
+        useCif = TRUE,
+        dimensions = c(500, 300)
+      )
+    })
+  
+  # Crea un dataframe con la información de las proteínas
+  protein_frame <- data.frame(
+    id = c("A0A2K5QXN6", "A0A0D9XQI0", "Q8W3K0", "Q5VSL9", "P76011"),
+    organismo = c("Cebus imitator", "Leersia perrieri", "Arabidopsis thaliana", "Homo sapiens", "Escherichia coli (cepa K12)"),
+    nombre = c("Quinasa 2 Dependiente de la Ciclina ", "Proteína no caracterizada", "Proteína con probable resistencia a las enfermedades At1g58602", "Proteína 1 interactuante con estriatina", "UPF0410 proteína YmgE"),
+    descripcion = c("Regulador clave en la progresión del ciclo celular.", "Desconocida.", "Necesaria para interacciones incompatibles con cepas avirulentas de Hyaloperonospora arabidopsidis.", "Desempeña un papel en la regulación de la morfología celular y la organización del citoesqueleto." , "Respuesta al estrés celular y en la regulación de la morfología celular y la estructura del citoesqueleto."),
+    stringsAsFactors = FALSE
+  )
+  
+  # Función para obtener la información de la proteína según el ID seleccionado
+  get_protein_info <- function(proteinId) {
+    protein_frame[protein_frame$id == proteinId, ]
+  }
+  
+  # Crear el renderUI para mostrar la información de la proteína según el ID
+  output$protein_info <- renderPrint({
+    proteinId <- input$proteinId
+    protein <- get_protein_info(proteinId)
+    HTML(paste0(
+      "<strong>Nombre:</strong> ", protein$nombre, "<br><br>",
+      "<strong>Organismo de origen:</strong> ", protein$organismo, "<br><br>",
+      "<strong>Funcionalidad:</strong> ", protein$descripcion, "<br><br>"
+    ))
+  })
+  
+  
+  #---------------------------------------------
   # Funcionalidad de Valentin
   
   image_reactive <- reactiveVal(NULL)

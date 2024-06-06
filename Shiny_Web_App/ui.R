@@ -1,6 +1,7 @@
 # Carga de librerías
 library(shiny)
 library(ggvis)
+library(shiny.molstar)
 
 #---------------------------------------------
 # SPOTIFY
@@ -135,7 +136,7 @@ shinyApp(ui = ui, server = server)'
                                min = 15, max = 600, value = 180
                    ),
                    checkboxInput("explicit", "Explícita", FALSE),
-                   selectInput("genre", "Género (a movie can have multiple genres)",
+                   selectInput("genre", "Género (una película puede tener varios géneros)",
                                c("Cualquiera", genres[,1])
                    ),
                    textInput("artist", "Artista (puedes buscar por nombre parcial)"),
@@ -193,9 +194,48 @@ shinyApp(ui = ui, server = server)'
       ),
       
       # ------------------------------------------------------------------------------------
+      # PROTEIN FOLDING
       # ------------------------------------------------------------------------------------
+      tabPanel("AlphaFold", 
+               fluidRow(
+                 column(12,
+                        h2("Plegamiento de Proteínas"),
+                        p("El plegamiento de proteínas es un proceso crucial en la biología molecular donde una cadena de aminoácidos se pliega en una estructura tridimensional específica y funcional. Este proceso es fundamental porque la función biológica de una proteína está directamente relacionada con su estructura tridimensional."),
+                        p("El plegamiento correcto de las proteínas es esencial para la salud celular y el buen funcionamiento del organismo. Sin embargo, cuando las proteínas no se pliegan correctamente, pueden formarse agregados tóxicos que están implicados en una variedad de enfermedades neurodegenerativas, como el Alzheimer, el Parkinson y la enfermedad de Huntington, así como en otras condiciones patológicas."),
+                        p("Comprender cómo las proteínas se pliegan correctamente y qué factores pueden influir en este proceso es uno de los grandes desafíos de la biología molecular. La predicción precisa de las estructuras proteicas ha sido históricamente difícil y ha requerido técnicas experimentales costosas y laboriosas como la cristalografía de rayos X y la resonancia magnética nuclear (RMN)."),
+                        h3("AlphaFold"),
+                        p("AlphaFold, desarrollado por DeepMind, ha revolucionado este campo mediante el uso de inteligencia artificial. AlphaFold utiliza redes neuronales profundas para predecir con alta precisión las estructuras tridimensionales de las proteínas basándose únicamente en sus secuencias de aminoácidos. Este avance ha abierto nuevas posibilidades para la investigación biomédica, facilitando el diseño de nuevos fármacos y el estudio de las bases moleculares de las enfermedades."),
+                        p("A continuación, puedes seleccionar una proteína específica para visualizar su estructura tridimensional y obtener información detallada sobre su funcionalidad y origen.")
+                 )
+               ),
+               
+               # Segunda fila: Parte inferior dividida en dos columnas
+               fluidRow(
+                 # Columna izquierda: Opciones a modificar
+                 column(4,
+                        h3("ID de la Proteína"),
+                        selectInput("proteinId", "", choices = c("A0A2K5QXN6", "A0A0D9XQI0", "Q8W3K0", "Q5VSL9", "P76011")),
+                        uiOutput("protein_info")
+                 ),
+                 
+                 # Columna derecha: Gráfico
+                 column(8,
+                        h3("Gráfico"),
+                        class = "box",
+                        uiOutput("alphafold_output"),
+                        p("Esta estructura ha sido obtenida por el modelo AlphaFold, un tipo de red neuronal que se ha especializado en predecir este tipo de estructuras mediante técnicas de Inteligencia Artificial, en concreto, con técnicas de Deep Learning."),
+                        tags$hr()
+                 )
+               )
+      ),
       
-      tabPanel("Pablo", "Contenido de Pablo"),
+      
+      
+      
+      
+      # ------------------------------------------------------------------------------------
+      # CONVOLUCION
+      # ------------------------------------------------------------------------------------
       tabPanel("Convolucion", 
                sidebarLayout(
                  sidebarPanel(
