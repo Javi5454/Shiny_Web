@@ -347,15 +347,15 @@ shinyApp(ui = ui, server = server)'
                             ),
                             hr(),
                             div(
-                              h3("Integrante 4: [Nombre]"),
-                              img(src = "ruta_a_la_foto_4.jpg", height = "150px"),
-                              p("Descripción breve sobre el integrante 4."),
-                              p("Lugar de procedencia: [Lugar de procedencia]"),
+                              h3("Integrante 4: Ángel"),
+                              img(src = "Angel.JPG", height = "150px"),
+                              p("Me gusta lo simple, tiempo de calidad y familia."),
+                              p("Lugar de procedencia: Pulianas (Granada)"),
                               p(
-                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                tags$a(href = "https://www.linkedin.com/in/angel-olmedo-50395b262/", target = "_blank",
                                        img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
                                 ),
-                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
+                                tags$a(href = "https://www.instagram.com/angel_olm14/", target = "_blank",
                                        img(src = "instagram.png", title = "Instagram", height = "30px")
                                 )
                               )
