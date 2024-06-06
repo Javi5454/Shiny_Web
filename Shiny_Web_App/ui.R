@@ -126,6 +126,21 @@ shinyApp(ui = ui, server = server)'
                  )
         ),
       tabPanel("Spotify",
+               h2("Spotify: La revolución musical"),
+               tags$div(
+                 style = "display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 20px;",
+                 tags$h3("¿Qué es Spotify?"),
+                 tags$p(HTML("<strong>Spotify</strong> es una empresa sueca de servicios multimedia fundada en 2006, cuyo producto es la aplicación homónima empleada para la reproducción de música vía streaming. Su modelo de negocio es el denominado freemium. ")),
+                   tags$div(
+                     style = "flex: 1;",
+                     tags$p(HTML("Spotify ofrece música grabada y podcasts digitales restringidos por derechos de autor que incluyen más de 100 millones de canciones, de sellos discográficos y compañías de medios. También ofrece más de 3 millones de vídeos musicales. Como servicio freemium, las funciones básicas son gratuitas con anuncios y control limitado, mientras que las funciones adicionales, como escuchar sin conexión, sin anuncios comerciales y vídeos musicales hasta 8K, se ofrecen a través de suscripciones pagas. Spotify está actualmente disponible en más de 184 países, a partir de julio de 2023. Los usuarios pueden buscar música según el artista, el álbum o el género y pueden crear, editar y compartir listas de reproducción."), style = "margin-bottom: 20px;"),
+                     tags$p(HTML("Empresas como Spotify han legitimado el acceso a la música en línea mediante el streaming. Una propuesta que da acceso inmediato a 30 millones de títulos musicales (estos varían en función del país). Hoy en día hay alrededor de 100 millones de títulos publicados, con lo cual Spotify no contiene ni el 30% de la totalidad. Aún así, el usuario puede tener la sensación de disponer de una infinidad de opciones puesto que no hay tiempo físico en una vida para escuchar todas ellas."), style = "margin-bottom: 20px;"),
+                   )
+               ),
+               h3("Filtrado de música según distintos "),
+               tags$p(HTML("El siguiente programa permite realizar una representación de las canciones de Spotify según distintos criterios. Además, si posicionas el cursor encima y seleccionas alguna de las canciones, te informa de su título, álbum al que pertenece y los artistas que participan en la canción.
+                           <br><br>
+                           Por último, indica cuantas canciones existen en Spotify con esos criterios. Cabe destacar que puesto que nuestro mínimo de popularidad está fijado a 10, hay canciones que no pueden aparecer en este programa.")),
                sidebarLayout(
                  sidebarPanel(
                    h4("Filtros"),
@@ -317,16 +332,16 @@ shinyApp(ui = ui, server = server)'
                             ),
                             hr(),
                             div(
-                              h3("Integrante 3: [Nombre]"),
-                              img(src = "ruta_a_la_foto_3.jpg", height = "150px"),
-                              p("Descripción breve sobre el integrante 3."),
-                              p("Lugar de procedencia: [Lugar de procedencia]"),
+                              h3("Integrante 3: Javier"),
+                              img(src = "Javi.jpg", height = "150px"),
+                              p("Apasionado del deporte y de la tecnología. Me gusta conocer las últimas novedades en todo momento."),
+                              p("Lugar de procedencia: Torrijos (Toledo)"),
                               p(
-                                tags$a(href = "https://www.linkedin.com/in/juan-valentin-guerrero-cano/", target = "_blank",
+                                tags$a(href = "https://www.linkedin.com/in/javier-g%C3%B3mez-l%C3%B3pez-642068248/", target = "_blank",
                                        img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
                                 ),
-                                tags$a(href = "https://www.instagram.com/valentin18gc/", target = "_blank",
-                                       img(src = "instagram.png", title = "Instagram", height = "30px")
+                                tags$a(href = "https://github.com/javi5454", target = "_blank",
+                                       img(src = "github.png", title = "Github", height = "30px")
                                 )
                               )
                             ),
