@@ -1,0 +1,138 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+
+\renewcommand*\contentsname{Índice} %Nombre del indice
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+\lstset{
+	basicstyle=\footnotesize,
+	extendedchars=true,
+	literate={á}{{\'a}}1 {ã}{{\~a}}1 {é}{{\'e}}1 {ú}{{\'u}}1 {ó}{{\'o}}1,
+	backgroundcolor=\color{black!5}
+	}
+	
+\begin{titlepage}
+	\centering
+	{\includegraphics[scale=0.5]{Logo_UGR.png}\par}
+	\vspace{1cm}
+	{\bfseries\Large Facultad de Ciencias \par}
+	\vspace{2.5cm}
+	{\scshape\Huge Trabajo Final Estadística Computacional\par}
+	\vspace{3cm}
+	{\itshape\Large Doble Grado Ingeniería Informática y Matemáticas}
+	\vfill
+	{\Large Autores: \par}
+	{\Large Javier Gómez López \par}
+	{\Large Pablo Fuentes Jimenez \par}
+	{\Large Angel Olmedo Navarro \par}
+	{\Large Juan Valentín Guerrero Cano \par}
+	
+	\vfill
+	{\Large 10 de junio de 2024 \par}
+\end{titlepage}
+
+\section{Introducción}
+
+\noindent Este informe describe el desarrollo de una aplicación web en R utilizando la librería \textit{Shiny}. Nuestro objetivo en este proyecto es profundizar en el uso de \textit{Shiny}, una herramienta potente que permite crear aplicaciones web interactivas directamente desde R, facilitando la visualización y análisis de datos de manera accesible y dinámica.\newline
+
+\noindent A lo largo del proyecto, exploraremos diversas funcionalidades de \textit{Shiny} y aprenderemos cómo podemos utilizarlo para resolver problemas específicos en el ámbito de la estadística computacional.
+
+\section{Contextualización y Motivación}
+\noindent La aplicación que se ha desarrollado tiene como objetivo principal proporcionar una plataforma interactiva para visualizar y analizar datos. Para ello, hemos optado por diseñar una aplicación web que incluya varias funcionalidades de la librería \textit{Shiny}, que consideramos interesante para profundizar, debido a la gran utilidad y transversalidad que puede tener dentro de nuestro grado.\newline
+
+\noindent Aparte de tener este objetivo, hemos querido enfocar el trabajo en la aplicación de las funcionalidades de la librería sobre problemas que son de interés para cada uno de nosotros, en concreto, sobre problemas relativos al análisis de datos y la estadística, y otros relativos a distintos campos de la inteligencia artificial.\newline
+
+\section{Herramientas y Tecnologías Utilizadas}
+\begin{itemize}
+    \item \textbf{Shiny}: Una librería de R que facilita la creación de aplicaciones web interactivas. Permite a los usuarios construir interfaces de usuario y definir la lógica del servidor con un mínimo de esfuerzo.
+    \item \textbf{ggplot2}: Es una librería de visualización de datos en R basada en la gramática de gráficos. Permite crear una amplia variedad de gráficos complejos de manera declarativa.
+    \item \textbf{ggvis}: Es una librería para crear visualizaciones de datos interactivas en R. Está inspirada en \textit{ggplot2} pero enfocada en la interactividad y la web. Se puede integrar directamente con aplicaciones \textit{Shiny} para crear visualizaciones más ricas.
+    \item \textbf{dplyr}: Esta librería incluyer funcionalidades para manejar la manipulación de datos en R. Proporciona un conjunto de funciones intuitivas y eficientes para trabajar con datos estructurados.    
+    \item \textbf{magick}: Una librería que se enfoca en dar funcionalidades para manejarel procesamiento y manipulación de imágenes en R, basada en el software \textit{ImageMagick}.
+    \item \textbf{Shiny.molstar}: Un paquete de R que envuelve la biblioteca de visualización molecular \textit{Molstar} y la integra con \textit{Shiny}. Esto permite combinar las capacidades de visualización de \textit{Molstar} con las herramientas analíticas de R para explorar datos moleculares de forma interactiva y profunda.
+\end{itemize}
+
+\subsection{Instalación}
+\noindent Para instalar las distintas herramientas necesarias para la ejecución de nuestro proyecto, se utilizan los siguientes comandos en R:
+\begin{lstlisting}[language=R, caption={Instalación de librerías}]
+    # Instalación de librerias
+    install.packages("shiny")
+    install.packages("ggvis")
+    install.packages("dplyr")
+    install.packages("ggplot2")
+    install.packages("magick")
+
+    # Instalar el paquete shiny.molstar a partir del repositorio
+    install.packages("remotes")
+    library(remotes)
+    install_github("Appsilon/shiny.molstar")
+    library(shiny.molstar)
+\end{lstlisting}
+
+
+\section{Descripción de la Aplicación}
+
+\noindent La aplicación web esta compuesta por una serie de apartados donde se desarrollarán distintas funcionalidades del paquete \textit{Shiny} que se aplicarán sobre problemas de distinta índole.\newline
+
+\noindent Profundizando en la estructura de la aplicación, se observan los siguientes apartados:
+
+\begin{itemize}
+    \item \textbf{Home}: Este apartado proporciona una idea general del funcionamiento de \textit{Shiny} y sus características. Además, se incluye un fragmento de código de ejemplo para crear una aplicación sencilla con esta librería.
+    
+    \item \textbf{Spotify}: Aquí se aborda un \textit{data frame} con datos obtenidos de la aplicación \textit{Spotify}. Concretamente, se incluye un gráfico interactivo en el cuál se muestran distintas canciones en función de varios filtros que se pueden variar, como pueden ser la duración máxima de la canción o los artistas que participan en la misma.
+
+    \item \textbf{Montecarlo}: Para esta apartado, hemos optado por mostrar el funcionamiento de la técnica \textbf{Simulación de Difusión Montecarlo}. Esta técnica se basa principalmente en métodos estocásticos y su objetivo principal es el de modelar y analizar sistemas que evolucionan con el tiempo.
+
+    \noindent En lo relativo a la librería, se incluye una gráfica donde se puede seleccionar el número de partículas que forman el espacio, así como el instante de tiempo que se quiere observar y el número de instantes totales que se quieren abarcar como máximo. Además, existe la opción de observar la trayectoria completa que ha seguido cada una de las partículas hasta el instante observado.
+    
+    \item \textbf{AlphaFold}: Para esta parte de la aplicación, se ha introducido el problema del plegamiento de proteínas que es de gran interés en la actualidad, debido al auge de la Inteligencia Artificial.\newline 
+    
+    \noindent En particular, se ha recurrido a una paquete cuyo funcionamiento se basa en la librería \textit{Shiny}. Este paquete es \textit{Shiny.molstar} e incluye funcionalidades para mostrar estructuras tridimensionales a partir de una selección de proteínas de las cuales se conoce su estructura.
+
+    \item \textbf{Convolucion}: Como penúltima funcionalidad, se incluye una sección relativa a la \textit{Visión por Computador}, basada principalmente en la utilización de filtros para obtener diferentes efectos sobre una imagen concreta. Estos filtros tienen una serie de valores que, mediante la operación de convolución modifica los valores de los píxeles de una imagen.
+
+    \noindent Respecto a la funcionalidad, se permite la subida de una imagen desde el ordenador, a la cual se le pueden aplicar una serie de sucesivos efectos, los cuáles son: Desenfoque, Detección de bordes, Sharpen, Emboss y Canny, así como reestablecer la imagen original.
+    
+    \item \textbf{About Us}: Por último, incluimos información general sobre nuestra motivación y objetivos en este proyecto y también cierta información personal de los integrantes del grupo.
+\end{itemize}
+
+\section{Conclusión}
+\noindent El uso de Shiny para el desarrollo de aplicaciones web en R ofrece una manera eficiente y accesible de presentar datos de forma interactiva. La aplicación desarrollada en este proyecto demuestra cómo se pueden utilizar estas herramientas para mejorar la visualización de resultados y permitir una exploración más interactiva de los datos.
+\end{document}

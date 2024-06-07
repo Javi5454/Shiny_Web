@@ -1,7 +1,19 @@
 # Carga de librerías
 library(shiny)
 library(ggvis)
+
+#---------------------------------------------
+# Install the remotes package
+#install.packages("remotes")
+
+# Load the remotes package
+#library(remotes)
+
+# Install the shiny.molstar package from GitHub
+#install_github("Appsilon/shiny.molstar")
+#---------------------------------------------
 library(shiny.molstar)
+
 
 #---------------------------------------------
 # SPOTIFY
@@ -151,7 +163,7 @@ shinyApp(ui = ui, server = server)'
                                min = 15, max = 600, value = 180
                    ),
                    checkboxInput("explicit", "Explícita", FALSE),
-                   selectInput("genre", "Género (una película puede tener varios géneros)",
+                   selectInput("genre", "Género (una canción puede tener varios géneros)",
                                c("Cualquiera", genres[,1])
                    ),
                    textInput("artist", "Artista (puedes buscar por nombre parcial)"),
@@ -219,7 +231,7 @@ shinyApp(ui = ui, server = server)'
                         p("Asegurar que las proteínas se plieguen correctamente es vital para mantener la salud celular y el funcionamiento adecuado del cuerpo. Sin embargo, cuando el plegamiento no es correcto, pueden formarse agregados tóxicos que están relacionados con enfermedades neurodegenerativas como el Alzheimer y el Parkinson, así como otras condiciones patológicas."),
                         p("Entender los mecanismos detrás del plegamiento de las proteínas y los factores que influyen en este proceso es uno de los desafíos más importantes en biología molecular. Históricamente, la predicción precisa de las estructuras proteicas ha sido difícil y requería técnicas experimentales costosas, como la cristalografía de rayos X y la resonancia magnética nuclear (RMN)."),
                         h3("AlphaFold"),
-                        p("AlphaFold, desarrollado por DeepMind, ha revolucionado este campo mediante el uso de inteligencia artificial. Utilizando redes neuronales profundas, AlphaFold puede predecir con alta precisión las estructuras tridimensionales de las proteínas a partir de sus secuencias de aminoácidos. Este avance ha abierto nuevas perspectivas en la investigación biomédica, facilitando el diseño de fármacos y el estudio de las bases moleculares de las enfermedades."),
+                        p(HTML("<strong>AlphaFold</strong>, desarrollado por <strong>DeepMind</strong>, ha revolucionado este campo mediante el uso de inteligencia artificial. Utilizando redes neuronales profundas, <strong>AlphaFold</strong> puede predecir con alta precisión las estructuras tridimensionales de las proteínas a partir de sus secuencias de aminoácidos. Este avance ha abierto nuevas perspectivas en la investigación biomédica, facilitando el diseño de fármacos y el estudio de las bases moleculares de las enfermedades.")),
                         p("A continuación, puedes seleccionar una proteína específica para visualizar su estructura tridimensional y obtener información detallada sobre su funcionalidad y origen.")
                  )
                ),
@@ -238,7 +250,7 @@ shinyApp(ui = ui, server = server)'
                         h3("Gráfico"),
                         class = "box",
                         uiOutput("alphafold_output"),
-                        p("Esta estructura ha sido obtenida por el modelo AlphaFold, un tipo de red neuronal especializado en predecir este tipo de estructuras mediante técnicas de Inteligencia Artificial, en concreto, con técnicas de Deep Learning."),
+                        p(HTML("Esta estructura ha sido obtenida por el modelo <strong>AlphaFold</strong>, un tipo de red neuronal especializado en predecir este tipo de estructuras mediante técnicas de Inteligencia Artificial, en concreto, con técnicas de Deep Learning.")),
                         tags$hr()
                  )
                )
@@ -320,7 +332,7 @@ shinyApp(ui = ui, server = server)'
                               h3("Integrante 2: Pablo"),
                               img(src = "Pablo.jpg", height = "150px"),
                               p("Soy un apasionado del deporte y la música, dos cosas que no podrían faltar en mi día a día."),
-                              p("Lugar de procedencia: Martos"),
+                              p("Lugar de procedencia: Martos(Jaén)"),
                               p(
                                 tags$a(href = "https://www.linkedin.com/in/pablo-fuentes-jim%C3%A9nez-62a497311/", target = "_blank",
                                        img(src = "linkedin.jpg", title = "LinkedIn", height = "30px")
